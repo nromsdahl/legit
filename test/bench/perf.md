@@ -1,14 +1,14 @@
 
 ### Performance
 
-With [crowbar](https://github.com/q3k/crowbar), a connection is tunneled by repeatedly querying the server with updates. This results in a large amount of HTTP and TCP connection overhead. Chisel overcomes this using WebSockets combined with [crypto/ssh](https://golang.org/x/crypto/ssh) to create hundreds of logical connections, resulting in **one** TCP connection per client.
+With [crowbar](https://github.com/q3k/crowbar), a connection is tunneled by repeatedly querying the server with updates. This results in a large amount of HTTP and TCP connection overhead. legit overcomes this using WebSockets combined with [crypto/ssh](https://golang.org/x/crypto/ssh) to create hundreds of logical connections, resulting in **one** TCP connection per client.
 
 In this simple benchmark, we have:
 
 ```
 					(direct)
         .--------------->----------------.
-       /    chisel         chisel         \
+       /    legit         legit         \
 request--->client:2001--->server:2002---->fileserver:3000
        \                                  /
         '--> crowbar:4001--->crowbar:4002'

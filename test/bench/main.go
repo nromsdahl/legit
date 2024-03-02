@@ -3,13 +3,13 @@
 //
 //                    (direct)
 //         .--------------->----------------.
-//        /    chisel         chisel         \
+//        /    legit         legit         \
 // request--->client:2001--->server:2002---->fileserver:3000
 //        \                                  /
 //         '--> crowbar:4001--->crowbar:4002'
 //              client           server
 //
-// crowbar and chisel binaries should be in your PATH
+// crowbar and legit binaries should be in your PATH
 
 package main
 

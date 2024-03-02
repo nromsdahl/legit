@@ -20,13 +20,13 @@ import (
 )
 
 var help = `
-  Usage: chisel [command] [--help]
+  Usage: legit [command] [--help]
 
   Version: ` + chshare.BuildVersion + ` (` + runtime.Version() + `)
 
   Commands:
-    server - runs chisel in server mode
-    client - runs chisel in client mode
+    server - runs legit in server mode
+    client - runs legit in client mode
 
   Read more:
     https://github.com/jpillora/chisel
@@ -74,7 +74,7 @@ var commonHelp = `
     --help, This help text
 
   Signals:
-    The chisel process is listening for:
+    The legit process is listening for:
       a SIGUSR2 to print process stats, and
       a SIGHUP to short-circuit the client reconnect timer
 
@@ -94,7 +94,7 @@ func generatePidFile() {
 }
 
 var serverHelp = `
-  Usage: chisel server [options]
+  Usage: legit server [options]
 
   Options:
 
@@ -119,7 +119,7 @@ var serverHelp = `
     this flag is set, the --key option is ignored, and the provided private key
     is used to secure all communications. (defaults to the CHISEL_KEY_FILE
     environment variable). Since ECDSA keys are short, you may also set keyfile
-    to an inline base64 private key (e.g. chisel server --keygen - | base64).
+    to an inline base64 private key (e.g. legit server --keygen - | base64).
 
     --authfile, An optional path to a users.json file. This file should
     be an object with users defined like:
@@ -145,11 +145,11 @@ var serverHelp = `
     to '25s' (set to 0s to disable).
 
     --backend, Specifies another HTTP server to proxy requests to when
-    chisel receives a normal HTTP request. Useful for hiding chisel in
+    legit receives a normal HTTP request. Useful for hiding legit in
     plain sight.
 
     --socks5, Allow clients to access the internal SOCKS5 proxy. See
-    chisel client --help for more information.
+    legit client --help for more information.
 
     --reverse, Allow clients to specify reverse port forwarding remotes
     in addition to normal remotes.
@@ -298,9 +298,9 @@ func (flag *headerFlags) Set(arg string) error {
 }
 
 var clientHelp = `
-  Usage: chisel client [options] <server> <remote> [remote] [remote] ...
+  Usage: legit client [options] <server> <remote> [remote] [remote] ...
 
-  <server> is the URL to the chisel server.
+  <server> is the URL to the legit server.
 
   <remote>s are remote connections tunneled through the server, each of
   which come in the form:
@@ -335,13 +335,13 @@ var clientHelp = `
       stdio:example.com:22
       1.1.1.1:53/udp
 
-    When the chisel server has --socks5 enabled, remotes can
+    When the legit server has --socks5 enabled, remotes can
     specify "socks" in place of remote-host and remote-port.
     The default local host and port for a "socks" remote is
     127.0.0.1:1080. Connections to this remote will terminate
     at the server's internal SOCKS5 proxy.
 
-    When the chisel server has --reverse enabled, remotes can
+    When the legit server has --reverse enabled, remotes can
     be prefixed with R to denote that they are reversed. That
     is, the server will listen and accept connections, and they
     will be proxied through the client which specified the remote.
@@ -383,7 +383,7 @@ var clientHelp = `
     disconnection. Defaults to 5 minutes.
 
     --proxy, An optional HTTP CONNECT or SOCKS5 proxy which will be
-    used to reach the chisel server. Authentication can be specified
+    used to reach the legit server. Authentication can be specified
     inside the URL.
     For example, http://admin:password@my-server.com:8081
             or: socks://admin:password@my-server.com:1080
@@ -398,14 +398,14 @@ var clientHelp = `
     hostname).
 
     --tls-ca, An optional root certificate bundle used to verify the
-    chisel server. Only valid when connecting to the server with
+    legit server. Only valid when connecting to the server with
     "https" or "wss". By default, the operating system CAs will be used.
 
     --tls-skip-verify, Skip server TLS certificate verification of
     chain and host name (if TLS is used for transport connections to
     server). If set, client accepts any TLS certificate presented by
     the server and any host name in that certificate. This only affects
-    transport https (wss) connection. Chisel server's public key
+    transport https (wss) connection. legit server's public key
     may be still verified (see --fingerprint) after inner connection
     is established.
 

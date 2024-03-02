@@ -64,7 +64,7 @@ func (c *Client) connectionLoop(ctx context.Context) error {
 	return nil
 }
 
-// connectionOnce connects to the chisel server and blocks
+// connectionOnce connects to the legit server and blocks
 func (c *Client) connectionOnce(ctx context.Context) (connected bool, err error) {
 	//already closed?
 	select {
@@ -109,7 +109,7 @@ func (c *Client) connectionOnce(ctx context.Context) (connected bool, err error)
 		return false, err
 	}
 	defer sshConn.Close()
-	// chisel client handshake (reverse of server handshake)
+	// legit client handshake (reverse of server handshake)
 	// send configuration
 	c.Debugf("Sending config")
 	t0 := time.Now()

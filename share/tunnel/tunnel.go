@@ -28,7 +28,7 @@ type Config struct {
 }
 
 //Tunnel represents an SSH tunnel with proxy capabilities.
-//Both chisel client and server are Tunnels.
+//Both legit client and server are Tunnels.
 //chisel client has a single set of remotes, whereas
 //chisel server has multiple sets of remotes (one set per client).
 //Each remote has a 1:1 mapping to a proxy.

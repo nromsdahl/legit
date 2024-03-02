@@ -2,7 +2,7 @@
 
 [![GoDoc](https://godoc.org/github.com/jpillora/chisel?status.svg)](https://godoc.org/github.com/jpillora/chisel) [![CI](https://github.com/jpillora/chisel/workflows/CI/badge.svg)](https://github.com/jpillora/chisel/actions?workflow=CI)
 
-Chisel is a fast TCP/UDP tunnel, transported over HTTP, secured via SSH. Single executable including both client and server. Written in Go (golang). Chisel is mainly useful for passing through firewalls, though it can also be used to provide a secure endpoint into your network.
+Chisel is a fast TCP/UDP tunnel, transported over HTTP, secured via SSH. Single executable including both client and server. Written in Go (golang). legit is mainly useful for passing through firewalls, though it can also be used to provide a secure endpoint into your network.
 
 ![overview](https://docs.google.com/drawings/d/1p53VWxzGNfy8rjr-mW8pvisJmhkoLl82vAgctO_6f1w/pub?w=960&h=720)
 
@@ -66,15 +66,15 @@ $ go install github.com/jpillora/chisel@latest
 A [demo app](https://chisel-demo.herokuapp.com) on Heroku is running this `chisel server`:
 
 ```sh
-$ chisel server --port $PORT --proxy http://example.com
+$ legit server --port $PORT --proxy http://example.com
 # listens on $PORT, proxy web requests to http://example.com
 ```
 
 This demo app is also running a [simple file server](https://www.npmjs.com/package/serve) on `:3000`, which is normally inaccessible due to Heroku's firewall. However, if we tunnel in with:
 
 ```sh
-$ chisel client https://chisel-demo.herokuapp.com 3000
-# connects to chisel server at https://chisel-demo.herokuapp.com,
+$ legit client https://chisel-demo.herokuapp.com 3000
+# connects to legit server at https://chisel-demo.herokuapp.com,
 # tunnels your localhost:3000 to the server's localhost:3000
 ```
 
@@ -86,17 +86,17 @@ and then visit [localhost:3000](http://localhost:3000/), we should see a directo
   or use https://github.com/jpillora/md-tmpl
     with $ md-tmpl -w README.md -->
 
-<!--tmpl,code=plain:echo "$ chisel --help" && go run main.go --help | sed 's#0.0.0-src (go1\..*)#X.Y.Z#' -->
+<!--tmpl,code=plain:echo "$ legit --help" && go run main.go --help | sed 's#0.0.0-src (go1\..*)#X.Y.Z#' -->
 ``` plain 
-$ chisel --help
+$ legit --help
 
-  Usage: chisel [command] [--help]
+  Usage: legit [command] [--help]
 
   Version: X.Y.Z
 
   Commands:
-    server - runs chisel in server mode
-    client - runs chisel in client mode
+    server - runs legit in server mode
+    client - runs legit in client mode
 
   Read more:
     https://github.com/jpillora/chisel
@@ -105,11 +105,11 @@ $ chisel --help
 <!--/tmpl-->
 
 
-<!--tmpl,code=plain:echo "$ chisel server --help" && go run main.go server --help | cat | sed 's#0.0.0-src (go1\..*)#X.Y.Z#' -->
+<!--tmpl,code=plain:echo "$ legit server --help" && go run main.go server --help | cat | sed 's#0.0.0-src (go1\..*)#X.Y.Z#' -->
 ``` plain 
-$ chisel server --help
+$ legit server --help
 
-  Usage: chisel server [options]
+  Usage: legit server [options]
 
   Options:
 
@@ -134,7 +134,7 @@ $ chisel server --help
     this flag is set, the --key option is ignored, and the provided private key
     is used to secure all communications. (defaults to the CHISEL_KEY_FILE
     environment variable). Since ECDSA keys are short, you may also set keyfile
-    to an inline base64 private key (e.g. chisel server --keygen - | base64).
+    to an inline base64 private key (e.g. legit server --keygen - | base64).
 
     --authfile, An optional path to a users.json file. This file should
     be an object with users defined like:
@@ -160,11 +160,11 @@ $ chisel server --help
     to '25s' (set to 0s to disable).
 
     --backend, Specifies another HTTP server to proxy requests to when
-    chisel receives a normal HTTP request. Useful for hiding chisel in
+    legit receives a normal HTTP request. Useful for hiding legit in
     plain sight.
 
     --socks5, Allow clients to access the internal SOCKS5 proxy. See
-    chisel client --help for more information.
+    legit client --help for more information.
 
     --reverse, Allow clients to specify reverse port forwarding remotes
     in addition to normal remotes.
@@ -197,7 +197,7 @@ $ chisel server --help
     --help, This help text
 
   Signals:
-    The chisel process is listening for:
+    The legit process is listening for:
       a SIGUSR2 to print process stats, and
       a SIGHUP to short-circuit the client reconnect timer
 
@@ -211,13 +211,13 @@ $ chisel server --help
 <!--/tmpl-->
 
 
-<!--tmpl,code=plain:echo "$ chisel client --help" && go run main.go client --help | sed 's#0.0.0-src (go1\..*)#X.Y.Z#' -->
+<!--tmpl,code=plain:echo "$ legit client --help" && go run main.go client --help | sed 's#0.0.0-src (go1\..*)#X.Y.Z#' -->
 ``` plain 
-$ chisel client --help
+$ legit client --help
 
-  Usage: chisel client [options] <server> <remote> [remote] [remote] ...
+  Usage: legit client [options] <server> <remote> [remote] [remote] ...
 
-  <server> is the URL to the chisel server.
+  <server> is the URL to the legit server.
 
   <remote>s are remote connections tunneled through the server, each of
   which come in the form:
@@ -252,13 +252,13 @@ $ chisel client --help
       stdio:example.com:22
       1.1.1.1:53/udp
 
-    When the chisel server has --socks5 enabled, remotes can
+    When the legit server has --socks5 enabled, remotes can
     specify "socks" in place of remote-host and remote-port.
     The default local host and port for a "socks" remote is
     127.0.0.1:1080. Connections to this remote will terminate
     at the server's internal SOCKS5 proxy.
 
-    When the chisel server has --reverse enabled, remotes can
+    When the legit server has --reverse enabled, remotes can
     be prefixed with R to denote that they are reversed. That
     is, the server will listen and accept connections, and they
     will be proxied through the client which specified the remote.
@@ -300,7 +300,7 @@ $ chisel client --help
     disconnection. Defaults to 5 minutes.
 
     --proxy, An optional HTTP CONNECT or SOCKS5 proxy which will be
-    used to reach the chisel server. Authentication can be specified
+    used to reach the legit server. Authentication can be specified
     inside the URL.
     For example, http://admin:password@my-server.com:8081
             or: socks://admin:password@my-server.com:1080
@@ -315,14 +315,14 @@ $ chisel client --help
     hostname).
 
     --tls-ca, An optional root certificate bundle used to verify the
-    chisel server. Only valid when connecting to the server with
+    legit server. Only valid when connecting to the server with
     "https" or "wss". By default, the operating system CAs will be used.
 
     --tls-skip-verify, Skip server TLS certificate verification of
     chain and host name (if TLS is used for transport connections to
     server). If set, client accepts any TLS certificate presented by
     the server and any host name in that certificate. This only affects
-    transport https (wss) connection. Chisel server's public key
+    transport https (wss) connection. legit server's public key
     may be still verified (see --fingerprint) after inner connection
     is established.
 
@@ -340,7 +340,7 @@ $ chisel client --help
     --help, This help text
 
   Signals:
-    The chisel process is listening for:
+    The legit process is listening for:
       a SIGUSR2 to print process stats, and
       a SIGHUP to short-circuit the client reconnect timer
 
@@ -355,7 +355,7 @@ $ chisel client --help
 
 ### Security
 
-Encryption is always enabled. When you start up a chisel server, it will generate an in-memory ECDSA public/private key pair. The public key fingerprint (base64 encoded SHA256) will be displayed as the server starts. Instead of generating a random key, the server may optionally specify a key file, using the `--keyfile` option. When clients connect, they will also display the server's public key fingerprint. The client can force a particular fingerprint using the `--fingerprint` option. See the `--help` above for more information.
+Encryption is always enabled. When you start up a legit server, it will generate an in-memory ECDSA public/private key pair. The public key fingerprint (base64 encoded SHA256) will be displayed as the server starts. Instead of generating a random key, the server may optionally specify a key file, using the `--keyfile` option. When clients connect, they will also display the server's public key fingerprint. The client can force a particular fingerprint using the `--fingerprint` option. See the `--help` above for more information.
 
 ### Authentication
 
@@ -368,20 +368,20 @@ Internally, this is done using the _Password_ authentication method provided by 
 1. Print a new private key to the terminal
 
     ```sh
-    chisel server --keygen -
+    legit server --keygen -
     # or save it to disk --keygen /path/to/mykey
     ```
 
-1. Start your chisel server
+1. Start your legit server
 
     ```sh
     jpillora/chisel server --keyfile '<ck-base64 string or file path>' -p 9312 --socks5
     ```
 
-1. Connect your chisel client (using server's fingerprint)
+1. Connect your legit client (using server's fingerprint)
 
     ```sh
-    chisel client --fingerprint '<see server output>' <server-address>:9312 socks
+    legit client --fingerprint '<see server output>' <server-address>:9312 socks
     ```
 
 1. Point your SOCKS5 clients (e.g. OS/Browser) to:
